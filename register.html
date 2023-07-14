@@ -17,5 +17,39 @@
 
     <button type="submit">Register</button>
   </form>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      const form = event.target;
+      const nameInput = form.querySelector('#name');
+      const addressInput = form.querySelector('#address');
+      const nationIDInput = form.querySelector('#nationID');
+
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: nameInput.value,
+          address: addressInput.value,
+          nationID: nationIDInput.value,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const message = data.message;
+        const vaccinationDate = data.vaccinationDate;
+
+        alert(`${message}\nVaccination Date: ${vaccinationDate}`);
+      } else {
+        const errorMessage = await response.text();
+        alert(`Registration Failed\n${errorMessage}`);
+      }
+    });
+  </script>
 </body>
 </html>
