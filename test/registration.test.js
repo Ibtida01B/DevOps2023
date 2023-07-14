@@ -9,5 +9,3 @@ test('registers a user', async () => {
   expect(response.statusCode).toBe(200);
   expect(response.text).toBe('User registered successfully!');
 });
-
-// Add more test cases as needed
